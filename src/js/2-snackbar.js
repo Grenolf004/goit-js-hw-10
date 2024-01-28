@@ -1,0 +1,49 @@
+import iziToast from "izitoast";
+import "izitoast/dist/css/iziToast.min.css";
+import closeIcon from '../img/bi_x-octagon.png';
+import successIcon from '../img/bi_check2-circle.png';
+
+const form = document.querySelector('.form');
+form.addEventListener('submit', inputUserDelay)
+ 
+function inputUserDelay(e) {
+    e.preventDefault();
+    const delay = form.delay.value;
+    const state = form.state.value;
+    createPromise(delay,state);
+    form.reset();
+}
+ 
+function createPromise(delay,state) {
+    const promise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            if (state === 'fulfilled') {
+                resolve(
+                    iziToast.success({
+                        title: 'OK',
+                        titleColor: '#FFF',
+                        messageColor: '#FFF',
+                        iconUrl: successIcon,
+                        color: '#59A10D',
+                        position: 'topRight',
+                        message: `Fulfilled promise in ${delay} ms`,
+}))
+    } else {
+                reject(
+                    iziToast.error({
+                        title: 'Error',
+                        titleColor: '#FFF',
+                        iconUrl: closeIcon,
+                        messageColor: '#FFF',
+                        color: '#EF4040',
+                        position: 'topRight',
+                        message: `Rejected promise in ${delay} ms`,
+}))
+}
+   },delay)
+ })
+
+    promise
+        .then((success) => { return success })
+        .catch((error) => { return error })
+ }
